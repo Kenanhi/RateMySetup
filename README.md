@@ -81,5 +81,3 @@ RateMySetup/
    - Open your browser and go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see the application.
    - Go to [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) to access the admin panel.
 ```
-
-You can copy and paste this directly into your `README.md` file.
