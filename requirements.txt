@@ -1,0 +1,10 @@
+Django>=4.2
+djangorestframework
+markdown       # Required for the browsable API interface
+django-filter  # Helps with filtering API results
+psycopg2-binary # Required for PostgreSQL (Docker database)
+gunicorn       # The web server used inside Docker
+pytest         # The testing framework
+pytest-django  # Plugin to make pytest work with Django
+flake8         # Checks your code for style errors
+Pillow
