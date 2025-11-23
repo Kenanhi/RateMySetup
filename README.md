@@ -1,85 +1,122 @@
-# RateMySetup
+````markdown
+# RateMySetup 🖥️
 
-**RateMySetup** is a Django-based web application where developers can share and review their development setups, including detailed information about their hardware and software configurations.
+![CI Status](https://github.com/Kenanhi/RateMySetup/actions/workflows/ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![Django](https://img.shields.io/badge/Django-4.2-green)
+![Docker](https://img.shields.io/badge/Docker-Enabled-blue)
 
-## Features
+**RateMySetup** is a containerized Django web application that allows developers to publish, share, and review development setups. This project has been modernized to include a fully functional REST API, Docker orchestration, and a CI/CD pipeline.
 
-- **User Authentication:** Custom user model with email-based login.
-- **Setup Sharing:** Users can publish their setups with descriptions and images.
-- **Review System:** Users can review and rate setups.
-- **Admin Panel:** Manage users, setups, and reviews with Django's admin interface.
-```markdown
-## Project Structure
+## 🚀 Features
 
+* **User Authentication:** Custom user model with secure email-based login and JWT-ready structure.
+* **Setup Sharing:** Users can publish their setups with detailed descriptions and image uploads.
+* **Review System:** Community-driven rating system (1-5 stars) with comments.
+* **REST API:** Fully browseable API built with Django Rest Framework (DRF).
+* **Admin Panel:** Manage users, setups, and reviews via the Django Admin interface.
+* **CI/CD Pipeline:** Automated testing and build verification via GitHub Actions.
+* **Containerized:** "Infrastructure as Code" using Docker and Docker Compose with PostgreSQL.
+
+## 🛠️ Tech Stack
+
+* **Backend:** Python 3.11, Django 4.2, Django Rest Framework
+* **Database:** PostgreSQL 15 (Dockerized)
+* **Containerization:** Docker, Docker Compose
+* **Testing:** Pytest, Pytest-Django
+* **Deployment:** Gunicorn (WSGI)
+
+## 📂 Project Structure
+
+```text
 RateMySetup/
-├── RateMySetup/               # Project settings and main configuration
-│   ├── __init__.py
-│   ├── asgi.py
-│   ├── settings.py            # Main settings for the Django project
-│   ├── urls.py                # URL configuration
-│   ├── wsgi.py
-│
-├── myapp/                     # Main application directory
-│   ├── migrations/            # Database migrations
-│   ├── __init__.py
-│   ├── admin.py               # Admin panel customization
-│   ├── apps.py                # App configuration
-│   ├── models.py              # Database models
+├── .github/workflows/         # CI/CD Pipeline (GitHub Actions)
+├── RateMySetup/               # Project settings and configuration
+├── myapp/                     # Main application (Models, Views, Serializers)
+│   ├── migrations/            # Database schema versions
 │   ├── tests.py               # Automated tests
-│   ├── views.py               # Application views
-│
-├── setups/                    # Directory for uploaded setup images (optional)
-├── db.sqlite3                 # SQLite database file (excluded in .gitignore)
+│   └── ...
+├── setups/                    # Directory for user-uploaded images
+├── Dockerfile                 # Docker image definition
+├── docker-compose.yml         # Container orchestration (Web + DB)
 ├── manage.py                  # Django management script
-└── README.md                  # This readme file
-```
+├── pytest.ini                 # Test configuration
+├── requirements.txt           # Project dependencies
+└── README.md                  # Project documentation
+````
 
-## Getting Started
+## ⚙️ Getting Started
+
+You can run this project locally using Docker (Recommended) or standard Python virtual environments.
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- pip (Python package installer)
-- Virtual environment tools (optional but recommended)
+  * **Docker Desktop** (Installed and running)
+  * **Git**
 
-### Installation
+### 🐳 Installation (Docker Method)
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Kenanhi/RateMySetup.git
-   cd RateMySetup
-   ```
+1.  **Clone the repository:**
 
-2. **Set up a virtual environment** (optional but recommended):
-   ```bash
-   python -m venv venv
-   source venv/bin/activate   # On Windows use `venv\Scripts\activate`
-   ```
+    ```bash
+    git clone [https://github.com/Kenanhi/RateMySetup.git](https://github.com/Kenanhi/RateMySetup.git)
+    cd RateMySetup
+    ```
 
-3. **Install the required packages**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+2.  **Build and Start the Stack:**
+    This command builds the container and starts both the Web Server and PostgreSQL Database.
 
-4. **Apply the migrations**:
-   ```bash
-   python manage.py migrate
-   ```
+    ```bash
+    docker compose up -d --build --wait
+    ```
 
-5. **Create a superuser**:
-   ```bash
-   python manage.py createsuperuser
-   ```
+3.  **Apply Database Migrations:**
+    Initialize the PostgreSQL database schema.
 
-6. **Run the development server**:
-   ```bash
-   python manage.py runserver
-   ```
+    ```bash
+    docker compose exec web python manage.py migrate
+    ```
 
-7. **Access the application**:
+4.  **Create an Admin User:**
+    Create a superuser to access the admin panel.
 
-   - Open your browser and go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see the application.
-   - Go to [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) to access the admin panel.
+    ```bash
+    docker compose exec web python manage.py createsuperuser
+    ```
+
+5.  **Access the Application:**
+
+      * **API Root:** [http://localhost:8000/api/](https://www.google.com/search?q=http://localhost:8000/api/)
+      * **Admin Panel:** [http://localhost:8000/admin/](https://www.google.com/search?q=http://localhost:8000/admin/)
+
+-----
+
+## 🧪 Automated Testing
+
+This project uses `pytest` for unit and integration testing. The tests cover user registration, setup creation, and API endpoint validity.
+
+**To run tests locally:**
+
+```bash
+docker compose exec web pytest -v
 ```
 
-You can copy and paste this directly into your `README.md` file.
+**To view tests in CI/CD:**
+Navigate to the **Actions** tab in this GitHub repository to see the automated test results for every commit.
+
+-----
+
+## 📡 API Documentation
+
+The API allows full CRUD operations. You can interact with it via the Browsable API interface at `/api/`.
+
+| Endpoint | Method | Description |
+| :--- | :--- | :--- |
+| `/api/users/` | `POST` | Register a new user (Open registration) |
+| `/api/users/` | `GET` | List users (Admin/Authenticated) |
+| `/api/setups/` | `GET` | View all shared setups |
+| `/api/setups/` | `POST` | Create a new setup (Requires Login) |
+| `/api/reviews/` | `POST` | Rate a setup (Requires Login) |
+
+```
+```

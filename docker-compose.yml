@@ -3,9 +3,7 @@ version: '3.8'
 services:
   web:
     build: .
-    # Restart if it crashes for any reason
     restart: always
-    # Run migrations AND start the server
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
@@ -15,7 +13,7 @@ services:
       - USE_DOCKER=1
     depends_on:
       db:
-        condition: service_healthy  # <--- MAGIC FIX: Wait for DB to be healthy
+        condition: service_healthy  
 
   db:
     image: postgres:15
@@ -25,7 +23,6 @@ services:
       - POSTGRES_DB=ratemysetup
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-    # Define what "Healthy" means for the database
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s

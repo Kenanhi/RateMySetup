@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User, Setup, Review
 
-# Register the custom User model
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
     model = User
