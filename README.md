@@ -1,4 +1,3 @@
-````markdown
 # RateMySetup 🖥️
 
 ![CI Status](https://github.com/Kenanhi/RateMySetup/actions/workflows/ci.yml/badge.svg)
@@ -117,6 +116,3 @@ The API allows full CRUD operations. You can interact with it via the Browsable 
 | `/api/setups/` | `GET` | View all shared setups |
 | `/api/setups/` | `POST` | Create a new setup (Requires Login) |
 | `/api/reviews/` | `POST` | Rate a setup (Requires Login) |
-
-```
-```
