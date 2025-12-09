@@ -49,10 +49,8 @@
     </div>
 
     <script>
-        // 1. Target the API endpoint
         const API_URL = '/api/setups/';
 
-        // 2. Fetch the data
         fetch(API_URL)
             .then(response => {
                 if (!response.ok) {
@@ -64,18 +62,14 @@
                 const container = document.getElementById('setup-container');
                 const loading = document.getElementById('loading');
                 
-                // Hide loader
                 loading.style.display = 'none';
 
-                // Check if data is empty
                 if (data.length === 0) {
                     container.innerHTML = '<div class="col-12 text-center"><p>No setups found. Create one in the Admin panel!</p></div>';
                     return;
                 }
 
-                // 3. Loop through data and create HTML cards
                 data.forEach(setup => {
-                    // Handle image: use API image or a placeholder
                     const imageUrl = setup.image ? setup.image : 'https://placehold.co/600x400?text=No+Image';
                     
                     const cardHtml = `

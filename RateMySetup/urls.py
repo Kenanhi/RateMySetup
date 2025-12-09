@@ -12,13 +12,10 @@ router.register(r'setups', views.SetupViewSet)
 router.register(r'reviews', views.ReviewViewSet)
 
 urlpatterns = [
-    # 1. Admin Panel
     path('admin/', admin.site.urls),
 
-    # 2. API Endpoints (e.g., /api/setups/)
     path('api/', include(router.urls)),
 
-    # 3. The New Frontend Gallery (Homepage)
     path('', views.home, name='home'),
 ]
 if settings.DEBUG:
