@@ -33,7 +33,7 @@ class Setup(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='setups')
     title = models.CharField(max_length=255)
     description = models.TextField()
-    image = models.ImageField(upload_to='setups/', blank=True, null=True)
+    image = models.ImageField(upload_to='setups_images/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
