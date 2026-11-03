@@ -19,7 +19,20 @@ SECRET_KEY = 'django-insecure-9ppao_0_9z-7k^gki7yu-qmwg3l1yi%6!3!j!c)0paa4a_t#-+
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,74.241.133.70").split(",")
+    if host.strip()
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv(
+        "CSRF_TRUSTED_ORIGINS",
+        "http://74.241.133.70,http://localhost,http://127.0.0.1,http://localhost:8000,http://127.0.0.1:8000"
+    ).split(",")
+    if origin.strip()
+]
 
 
 

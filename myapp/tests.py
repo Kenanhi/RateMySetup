@@ -54,6 +54,13 @@ def test_azure_storage_configuration():
     assert 'storages' in settings.INSTALLED_APPS
 
 
+def test_security_settings():
+    """Verify that ALLOWED_HOSTS and CSRF_TRUSTED_ORIGINS contain Azure VM IP."""
+    from django.conf import settings
+    assert '74.241.133.70' in settings.ALLOWED_HOSTS
+    assert 'http://74.241.133.70' in settings.CSRF_TRUSTED_ORIGINS
+
+
 @pytest.mark.django_db
 @override_settings(**TEST_STORAGE_SETTINGS)
 def test_azure_vision_graceful_degradation_when_keys_missing(monkeypatch):

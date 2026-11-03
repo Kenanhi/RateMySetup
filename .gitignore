@@ -12,3 +12,7 @@ db.sqlite3
 
 # Pytest & cache
 .pytest_cache/
+
+# Local media uploads
+media/
+
