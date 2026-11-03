@@ -33,7 +33,8 @@ class Setup(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='setups')
     title = models.CharField(max_length=255)
     description = models.TextField()
-    image = models.ImageField(upload_to='setups_images/')
+    image = models.ImageField(upload_to='setups/', null=True, blank=True)
+    hardware_tags = models.JSONField(default=list, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

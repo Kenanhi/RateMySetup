@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions
 from .models import Setup, Review, User
 from .serializers import SetupSerializer, ReviewSerializer, UserSerializer
+from .azure_vision import analyze_hardware_tags
 from django.shortcuts import render
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
@@ -24,7 +25,17 @@ class SetupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        image = self.request.FILES.get('image') or serializer.validated_data.get('image')
+        hardware_tags = analyze_hardware_tags(image) if image else []
+        serializer.save(owner=self.request.user, hardware_tags=hardware_tags)
+
+    def perform_update(self, serializer):
+        image = self.request.FILES.get('image') or serializer.validated_data.get('image')
+        if image:
+            hardware_tags = analyze_hardware_tags(image)
+            serializer.save(hardware_tags=hardware_tags)
+        else:
+            serializer.save()
 
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()

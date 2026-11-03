@@ -8,3 +8,5 @@ pytest
 pytest-django  
 flake8         
 Pillow
+django-storages[azure]
+azure-ai-vision-imageanalysis

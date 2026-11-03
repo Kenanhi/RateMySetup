@@ -10,9 +10,10 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(Setup)
 class SetupAdmin(admin.ModelAdmin):
-    list_display = ['title', 'owner', 'created_at']
+    list_display = ['title', 'owner', 'hardware_tags', 'created_at']
     search_fields = ['title', 'description']
     list_filter = ['created_at']
+    readonly_fields = ['hardware_tags']
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):

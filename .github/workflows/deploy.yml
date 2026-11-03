@@ -1,0 +1,21 @@
+name: Deploy to Azure VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Azure Linux VM
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH and Deploy to Azure Linux VM
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd [repo_path] && git pull origin main && docker compose down && docker compose up -d --build

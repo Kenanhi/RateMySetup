@@ -79,6 +79,11 @@
                                 <div class="card-body">
                                     <h5 class="card-title fw-bold">${setup.title}</h5>
                                     <p class="card-text text-muted">${setup.description.substring(0, 100)}...</p>
+                                    ${setup.hardware_tags && setup.hardware_tags.length > 0 ? `
+                                        <div class="mb-2">
+                                            ${setup.hardware_tags.map(tag => `<span class="badge bg-secondary me-1 mb-1">🏷️ ${tag}</span>`).join('')}
+                                        </div>
+                                    ` : ''}
                                     <div class="d-flex justify-content-between align-items-center mt-3">
                                         <small class="text-muted">By User #${setup.user}</small>
                                         <span class="badge bg-success">Verified</span>

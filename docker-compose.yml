@@ -11,6 +11,11 @@ services:
       - "8000:8000"
     environment:
       - USE_DOCKER=1
+      - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME:-}
+      - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY:-}
+      - AZURE_CONTAINER=${AZURE_CONTAINER:-media}
+      - AZURE_VISION_ENDPOINT=${AZURE_VISION_ENDPOINT:-}
+      - AZURE_VISION_KEY=${AZURE_VISION_KEY:-}
     depends_on:
       db:
         condition: service_healthy  
