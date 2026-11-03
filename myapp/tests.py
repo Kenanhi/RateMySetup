@@ -62,6 +62,31 @@ def test_security_settings():
 
 
 @pytest.mark.django_db
+def test_setup_detail_view_success(client):
+    """Verify setup_detail renders individual setup page with title, owner, and hardware tags."""
+    user = User.objects.create_user(email="gamer@example.com", password="password")
+    setup = Setup.objects.create(
+        owner=user,
+        title="Triple Monitor Rig",
+        description="High-end streaming and gaming battlestation",
+        hardware_tags=["monitor", "mechanical keyboard", "gpu"]
+    )
+    response = client.get(f'/setup/{setup.id}/')
+    assert response.status_code == 200
+    assert "Triple Monitor Rig" in response.content.decode()
+    assert "gamer@example.com" in response.content.decode()
+    assert "mechanical keyboard" in response.content.decode()
+    assert "Back to Gallery" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_setup_detail_view_404(client):
+    """Verify setup_detail returns 404 for non-existent setup ID."""
+    response = client.get('/setup/999999/')
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
 @override_settings(**TEST_STORAGE_SETTINGS)
 def test_azure_vision_graceful_degradation_when_keys_missing(monkeypatch):
     """Ensure upload succeeds with empty tags when Azure credentials are missing."""

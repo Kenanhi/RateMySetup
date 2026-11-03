@@ -2,7 +2,7 @@ from rest_framework import viewsets, permissions
 from .models import Setup, Review, User
 from .serializers import SetupSerializer, ReviewSerializer, UserSerializer
 from .azure_vision import analyze_hardware_tags
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -47,4 +47,10 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 def home(request):
     """Serve the gallery frontend."""
-    return render(request, 'myapp/home.html')       
+    return render(request, 'myapp/home.html')
+
+
+def setup_detail(request, pk):
+    """Serve the detail page for a single setup."""
+    setup = get_object_or_404(Setup, pk=pk)
+    return render(request, 'myapp/setup_detail.html', {'setup': setup})       

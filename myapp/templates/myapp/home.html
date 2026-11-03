@@ -72,22 +72,28 @@
                 data.forEach(setup => {
                     const imageUrl = setup.image ? setup.image : 'https://placehold.co/600x400?text=No+Image';
                     
+                    const detailUrl = `/setup/${setup.id}/`;
                     const cardHtml = `
                         <div class="col-md-4">
-                            <div class="card setup-card border-0 shadow-sm">
-                                <img src="${imageUrl}" class="card-img-top setup-img" alt="${setup.title}">
-                                <div class="card-body">
-                                    <h5 class="card-title fw-bold">${setup.title}</h5>
-                                    <p class="card-text text-muted">${setup.description.substring(0, 100)}...</p>
+                            <div class="card setup-card border-0 shadow-sm d-flex flex-column h-100">
+                                <a href="${detailUrl}">
+                                    <img src="${imageUrl}" class="card-img-top setup-img" alt="${setup.title}" loading="lazy">
+                                </a>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title fw-bold">
+                                        <a href="${detailUrl}" class="text-decoration-none text-dark">${setup.title}</a>
+                                    </h5>
+                                    <p class="card-text text-muted">${setup.description ? setup.description.substring(0, 100) + '...' : ''}</p>
                                     ${setup.hardware_tags && setup.hardware_tags.length > 0 ? `
-                                        <div class="mb-2">
+                                        <div class="mb-3">
                                             ${setup.hardware_tags.map(tag => `<span class="badge bg-secondary me-1 mb-1">🏷️ ${tag}</span>`).join('')}
                                         </div>
                                     ` : ''}
-                                    <div class="d-flex justify-content-between align-items-center mt-3">
-                                        <small class="text-muted">By User #${setup.user}</small>
+                                    <div class="d-flex justify-content-between align-items-center mt-auto pt-2">
+                                        <small class="text-muted">By ${setup.owner || 'User #' + setup.user}</small>
                                         <span class="badge bg-success">Verified</span>
                                     </div>
+                                    <a href="${detailUrl}" class="btn btn-outline-primary btn-sm mt-3">View Details →</a>
                                 </div>
                             </div>
                         </div>
